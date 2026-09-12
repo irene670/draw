@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#eef0d7" />
+    <meta name="color-scheme" content="light" />
+    <title>7.30 惜山林｜森林守護挑戰</title>
+    <link rel="preload" href="./public/assets/forest-energy-portrait-v2.webp" as="image" type="image/webp" />
+    <link rel="preload" href="./public/assets/timer-life-tree-v4.webp" as="image" type="image/webp" />
+    <link rel="preload" href="./public/assets/forest-seed-idle-v2.webp" as="image" type="image/webp" />
+    <link rel="preload" href="./public/assets/forest-seed-charge-v2.webp" as="image" type="image/webp" />
+    <link rel="stylesheet" href="./styles.css?v=20260817-8" />
+  </head>
+  <body>
+    <main class="game-shell" id="gameShell" data-phase="idle" data-energy="0" data-seed-state="idle">
+      <div class="forest-backdrop" aria-hidden="true"></div>
+      <div class="forest-wash" aria-hidden="true"></div>
+
+      <header class="top-bar">
+        <div class="brand-lockup" aria-label="7.30 惜山林 森林守護挑戰">
+          <svg aria-hidden="true" viewBox="0 0 48 48" fill="none">
+            <path d="M39 8C23 8 10 15 10 29c0 7 5 11 11 11 14 0 20-15 18-32Z" fill="currentColor" />
+            <path d="M14 37c7-9 13-14 21-21M23 25c-1-4-1-7 0-11M27 23c4-1 7-1 10 0" stroke="#fff9e7" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+          <span><b>7.30 惜山林</b><small>森林守護挑戰</small></span>
+        </div>
+
+        <div class="screen-controls" aria-label="工作人員工具">
+          <button class="tool-button" id="soundButton" type="button" aria-label="關閉音效" aria-pressed="true">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5 6.8 8.5H3v7h3.8L11 19V5Z" />
+              <g class="sound-waves"><path d="M15 9.2a4 4 0 0 1 0 5.6" /><path d="M18 6.5a7.5 7.5 0 0 1 0 11" /></g>
+              <path class="sound-slash" d="m15.5 9.5 5 5m0-5-5 5" />
+            </svg>
+            <span>音效開</span>
+          </button>
+          <button class="tool-button" id="simulateWinButton" type="button" aria-label="模擬中獎畫面">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21V9m0 4c-5.5 0-8-3.5-8-8 5.5 0 8 3.5 8 8Zm0 4c5.5 0 8-3.5 8-8-5.5 0-8 3.5-8 8Z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>預覽</span>
+          </button>
+          <button class="tool-button" id="fullscreenButton" type="button" aria-label="進入全螢幕">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" />
+            </svg>
+            <span>全螢幕</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="attempt-row" aria-label="三次守護機會">
+        <span class="attempt-title">惜山林機會</span>
+        <div class="attempt-dots" id="attemptDots" aria-label="剩餘三次機會"></div>
+      </section>
+
+      <section class="timer-zone" aria-label="計時主畫面">
+        <p class="round-label" id="roundLabel">第 1 次惜山林機會</p>
+        <div class="timer-wrap" id="timerWrap" aria-label="目前時間 0.00 秒">
+          <span class="timer-tree" aria-hidden="true">
+            <img src="./public/assets/timer-life-tree-v4.webp" alt="" width="1024" height="1536" draggable="false" />
+          </span>
+          <span class="timer-digits" aria-hidden="true">
+            <span class="timer-number-glow" id="timerGlowValue">0.00</span>
+            <span class="timer-value" id="timerValue">0.00</span>
+          </span>
+          <span class="timer-unit">秒</span>
+        </div>
+        <div class="target-line"><span></span><b>停在 7.30，一起惜山林</b><span></span></div>
+        <h1 class="headline" id="headline">按住種子<br />為惜山林蓄積能量</h1>
+        <p class="instruction" id="instruction">看到 7.30 秒就放開，惜山林，剛剛好</p>
+      </section>
+
+      <section class="forest-stage" aria-label="森林種子互動區">
+        <div class="growth-layer growth-one" aria-hidden="true"></div>
+        <div class="growth-layer growth-two" aria-hidden="true"></div>
+        <div class="growth-layer growth-three" aria-hidden="true"></div>
+
+        <div class="mori-character" id="moriCharacter" aria-hidden="true">
+          <img class="mori-state mori-peek" src="./public/assets/mori-squirrel-peek-v2.webp" alt="" />
+          <img class="mori-state mori-encourage" src="./public/assets/mori-squirrel-encourage-v2.webp" alt="" />
+          <img class="mori-state mori-celebrate" src="./public/assets/mori-squirrel-celebrate-v2.webp" alt="" />
+        </div>
+
+        <button class="seed-button" id="gameButton" type="button" aria-label="按住種子開始惜山林挑戰，7.30 秒時放開">
+          <span class="energy-aura" aria-hidden="true"></span>
+          <span class="energy-orbit orbit-one" aria-hidden="true"></span>
+          <span class="energy-orbit orbit-two" aria-hidden="true"></span>
+          <img class="seed-state seed-idle" src="./public/assets/forest-seed-idle-v2.webp" alt="" draggable="false" />
+          <img class="seed-state seed-charge" src="./public/assets/forest-seed-charge-v2.webp" alt="" draggable="false" />
+          <img class="seed-state seed-open" src="./public/assets/forest-seed-open-v2.webp" alt="" draggable="false" />
+          <img class="seed-state seed-tree" src="./public/assets/forest-seed-tree-v2.webp" alt="" draggable="false" />
+          <span class="seed-copy">
+            <b id="gameButtonLabel">按住惜山林</b>
+            <small id="gameButtonHint">7.30 秒時放開</small>
+          </span>
+        </button>
+
+        <div class="energy-status" aria-live="polite">
+          <span class="energy-bar"><i id="energyBarFill"></i></span>
+          <span id="energyLabel">森林正等你送進一份惜山林的心意</span>
+        </div>
+        <div class="attempt-results" id="attemptResults" aria-label="本局成績"></div>
+      </section>
+
+      <section class="result-card" id="resultCard" aria-hidden="true">
+        <p class="result-kicker" id="resultKicker">惜山林的心意已留下</p>
+        <h2 id="resultTitle">差一點就到 7.30</h2>
+        <p id="resultBody">雖然沒有命中，這份惜山林的心意還是留在森林裡了。</p>
+      </section>
+
+      <div class="live-status" id="liveStatus" role="status" aria-live="polite"></div>
+      <div class="leaf-burst" id="leafBurst" aria-hidden="true"></div>
+    </main>
+    <script type="module" src="./app.js?v=20260817-14"></script>
+  </body>
+</html>
