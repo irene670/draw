@@ -1,0 +1,13 @@
+{
+  "name": "730-forest-game",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8888",
+    "test": "node --test",
+    "qa:portrait": "node scripts/portrait-qa.mjs",
+    "qa:timing": "node scripts/timing-accuracy-qa.mjs",
+    "qa:touch": "node scripts/touch-release-qa.mjs"
+  }
+}
